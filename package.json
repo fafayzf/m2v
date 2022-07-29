@@ -1,0 +1,27 @@
+{
+  "name": "m2v",
+  "version": "1.0.0",
+  "description": "miniprogram",
+  "main": "index.js",
+  "scripts": {
+    "build": "node ./examples/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "shijianjun",
+  "license": "MIT",
+  "devDependencies": {
+    "@babel/generator": "^7.18.7",
+    "@babel/parser": "^7.18.8",
+    "@babel/traverse": "^7.18.8",
+    "@babel/types": "^7.18.8",
+    "chalk": "^5.0.1",
+    "css-tree": "^2.1.0",
+    "dom-serializer": "^2.0.0",
+    "domhandler": "^5.0.3",
+    "htmlparser2": "^8.0.1",
+    "js-beautify": "^1.14.4"
+  },
+  "dependencies": {
+    "commander": "^9.3.0"
+  }
+}
