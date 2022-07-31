@@ -8,18 +8,17 @@ const tasks = (entry, output) => {
 
   const fileList = traverseDir(entry)
 
-  return fileList.map(entryPath => {
-    const result = loader(entryPath)
-    return Promise
-      .resolve(result)
-      .then(components => {
+  return fileList.map(async entryPath => {
+    const result = await loader(entryPath)
+
+    return Promise.resolve(result).then(components => {
         if (!components) return
         if (!Array.isArray(components)) {
           components = [components]
         }
-        components.forEach(component => {
+        components.forEach(async component => {
 
-          const { code, name } = component;
+          const { code, name } = await component;
           const baseUrl = path.join(output, entryPath.replace(entry, ''))
           // 同步创建目录
           mkdirSync(baseUrl)

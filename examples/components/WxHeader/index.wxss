@@ -5,3 +5,6 @@
   width: 750rpx;
   height: 100rpx;
 }
+.content {
+  width: 100rpx;
+}

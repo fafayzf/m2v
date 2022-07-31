@@ -16,7 +16,7 @@ const transformNode = (ast) => {
         if (expression.callee.name === 'Component') {
           const properties = expression.arguments[0].properties
           properties && properties.map(item => {
-            item.rootProperty = true // 打标
+            item.rootProperty = true // 打标记
           })
         }
       })
@@ -31,11 +31,12 @@ const transformNode = (ast) => {
       }
     },
     ObjectProperty(path) {
-      const node = path.node
+      let node = path.node
       if (node.rootProperty) {
         if (node.key.name === 'behaviors' && node.value.type === 'ArrayExpression') {
           node.key.name = 'mixins'
         }
+
         if (node.key.name === 'properties' && node.value.type === 'ObjectExpression') {
           node.key.name = 'props'
           const properties = node.value.properties
@@ -45,8 +46,97 @@ const transformNode = (ast) => {
             })
           })
         }
+
+        if (node.key.name === 'data' && node.value.type === 'ObjectExpression') {
+          node = types.objectMethod('method', node.key, [],
+            types.blockStatement([types.returnStatement(node.value)])
+          )
+        }
+
+        if (node.key.name === 'ready' && node.value.type === 'FunctionExpression') {
+          node.key.name = 'mounted'
+        }
+
+        if (node.key.name === 'detached' && node.value.type === 'FunctionExpression') {
+          node.key.name = 'destroyed'
+        }
       }
       path.replaceWith(node)
+    },
+    MemberExpression(path) {
+      const node = path.node
+      const { object: _object, property: _property } = node
+      if (
+        (!node.computed && types.isIdentifier(_property) && _property.name === 'data')
+        ||
+        (node.computed && types.isStringLiteral(_property) && _property.value === 'data')
+      ) {
+        const thisExpression = _object
+        let isThis = types.isThisExpression(thisExpression)
+
+        if (types.isIdentifier(_object)) {
+          const expressionThisName = thisExpression.name
+          let currentPath = path
+          do {
+
+            currentPath = currentPath.findParent(path => path.isBlockStatement() || path.isProgram())
+            if (!currentPath) break
+
+            currentPath.traverse({
+              VariableDeclarator (path) {
+                const node = path.node
+                const id = node.id
+                if (types.isThisExpression(node.init)) {
+                  if (types.isIdentifier(id) && id.name === expressionThisName) {
+                    isThis = true
+                  }
+                }
+              }
+            })
+
+          } while (currentPath && !isThis)
+        }
+        if (isThis) {
+          path.replaceWith(_object)
+        }
+      }
+    },
+    CallExpression(path) {
+      const node = path.node
+      const callee = node.callee
+      const args = node.arguments
+      
+      if (callee.property && callee.property.name === 'setData') {
+
+        const properties = args[0] && args[0].properties
+        if (!Array.isArray(properties) && properties.length === 0) return
+
+        const memberExpressionMerge = (array) => {
+          const nextArray = array.filter((_, i) => i < array.length - 1)
+          const _object = nextArray.length == 1 ? nextArray[0] : memberExpressionMerge(nextArray)
+          const _property = array[array.length - 1]
+
+          return types.memberExpression(_object, _property)
+        }
+
+        const memberExpressionList = properties.map(dataItem => {
+          const key = dataItem.key
+          const value = dataItem.value
+          const leftArr = (key.name || key.value || '')
+            .split('.')
+            .map((name) => {
+              return types.identifier(name)
+            })
+
+          leftArr.unshift(callee.object)
+
+          const left = memberExpressionMerge(leftArr)
+          const right = value
+          return types.assignmentExpression("=", left, right)
+        })
+
+        path.replaceWithMultiple(memberExpressionList)
+      }
     }
   })
 

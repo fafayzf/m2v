@@ -21,10 +21,10 @@ const loader = (dir) => {
   // 已过滤的小程序文件目录，符合小程序组件的目录，存在，.js, .json, .wxml, .wxss 的目录
   const components = getComponentFiles(dir)
 
-  return components.map(content => {
+  return components.map(async content => {
     const generatorHtml = WxmlLoader(content.wxml)
     const generatorJs = JsLoader(content.js)
-    const generatorWxss = WxsslLoader(content.wxss)
+    const generatorWxss = await WxsslLoader(content.wxss)
     const html = beautify.html(`\t<div>${generatorHtml}</div>\t`, {
       indent_size: 2
     })

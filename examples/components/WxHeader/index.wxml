@@ -21,7 +21,20 @@
       hidden="{{isShow}}" 
       data-tpye="{{item.id}}" 
       data="{{a}}" 
-      bindtap="handleDetail">123</view>
+      bindtap="handleDetail">
+      <view class="test {{ a ? 'a' : 'b'}}" 
+        wx:for="{{list}}"  
+        wx:key="index" 
+        wx:for-item="user" 
+        id="item-{{item.a}} item-{{item.b}}" 
+        wx:if="{{user.a}}" 
+        hidden="{{isShow}}" 
+        data-tpye="{{item.id}}" 
+        data="{{a}}" 
+        bindtap="handleDetail">
+        456
+      </view>
+    </view>
     h2
     <view>text</view>
     <image src="http://www.baidu.com">

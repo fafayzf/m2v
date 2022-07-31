@@ -3,7 +3,11 @@
 	  <div :class="['test',a ? 'a' : 'b']" v-for="(user,index) in list" :key="index" :id="`item-${item.a} item-${item.b}`" v-if="user.a" v-show="isShow" :data-tpye="item.id" :data="a" @click="handleDetail">
 	    <div v-if="test">view</div>
 	    <div>
-	      <div :class="['test',a ? 'a' : 'b']" v-for="(user,index) in list" :key="index" :id="`item-${item.a} item-${item.b}`" v-if="user.a" v-show="isShow" :data-tpye="item.id" :data="a" @click="handleDetail">123</div>
+	      <div :class="['test',a ? 'a' : 'b']" v-for="(user,index) in list" :key="index" :id="`item-${item.a} item-${item.b}`" v-if="user.a" v-show="isShow" :data-tpye="item.id" :data="a" @click="handleDetail">
+	        <div :class="['test',a ? 'a' : 'b']" v-for="(user,index) in list" :key="index" :id="`item-${item.a} item-${item.b}`" v-if="user.a" v-show="isShow" :data-tpye="item.id" :data="a" @click="handleDetail">
+	          456
+	        </div>
+	      </div>
 	      h2
 	      <div>text</div>
 	      <img src="http://www.baidu.com">
@@ -36,41 +40,34 @@
 	    } // 简化的定义方式
 
 	  },
-	  data: {
-	    test: 1,
-	    lifetimes: {}
+
+	  data() {
+	    return {
+	      test: 1,
+	      lifetimes: {}
+	    };
 	  },
+
 	  // 私有数据，可用于模板渲染
-	  lifetimes: {
-	    // 生命周期函数，可以为函数，或一个在 methods 段中定义的方法名
-	    attached: function() {},
-	    moved: function() {},
-	    detached: function() {}
-	  },
-	  // 生命周期函数，可以为函数，或一个在 methods 段中定义的方法名
-	  attached: function() {},
-	  // 此处 attached 的声明会被 lifetimes 字段中的声明覆盖
-	  ready: function() {
+	  destroyed: function() {},
+	  mounted: function() {
 	    console.log('ready');
-	  },
-	  pageLifetimes: {
-	    // 组件所在页面的生命周期函数
-	    show: function() {},
-	    hide: function() {},
-	    resize: function() {}
 	  },
 	  methods: {
 	    // attached: 
 	    onMyButtonTap: function() {
-	      this.setData({ // 更新属性和数据的方法与更新页面数据的方法类似
-	      });
+	      this.test = 2;
+	      this.test = 2;
+	      this.test = 2;
 	    },
 	    // 内部方法建议以下划线开头
 	    _myPrivateMethod: function() {
-	      // 这里将 data.A[0].B 设为 'myPrivateData'
-	      this.setData({
-	        test: 2
-	      });
+	      const {
+	        test
+	      } = this;
+	      const user = this.user; // 这里将 data.A[0].B 设为 'myPrivateData'
+
+	      this.test = 2;
 	      wx.showToast({
 	        title: 'title'
 	      });
@@ -84,7 +81,11 @@
 	    position: fixed;
 	    top: 0;
 	    left: 0;
-	    width: 750rpx;
-	    height: 100rpx;
+	    width: 375px;
+	    height: 50px;
+	}
+
+	.content {
+	    width: 50px;
 	}
 </style>

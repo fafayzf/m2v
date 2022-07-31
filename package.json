@@ -2,7 +2,7 @@
   "name": "m2v",
   "version": "1.0.0",
   "description": "miniprogram",
-  "main": "index.js",
+  "main": "src/index.js",
   "scripts": {
     "build": "node ./examples/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -16,10 +16,12 @@
     "@babel/types": "^7.18.8",
     "chalk": "^5.0.1",
     "css-tree": "^2.1.0",
+    "deepmerge": "^4.2.2",
     "dom-serializer": "^2.0.0",
     "domhandler": "^5.0.3",
     "htmlparser2": "^8.0.1",
-    "js-beautify": "^1.14.4"
+    "js-beautify": "^1.14.4",
+    "postcss": "^8.4.14"
   },
   "dependencies": {
     "commander": "^9.3.0"
