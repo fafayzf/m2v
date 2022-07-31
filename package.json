@@ -1,11 +1,19 @@
 {
   "name": "m2v",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "miniprogram",
   "main": "src/index.js",
   "scripts": {
     "build": "node ./examples/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/fafayzf/m2v.git"
+  },
+  "homepage": "https://github.com/fafayzf/m2v#readme",
+  "bugs": {
+    "url": "https://github.com/fafayzf/m2v/issues"
   },
   "author": "shijianjun",
   "license": "MIT",
