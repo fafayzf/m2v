@@ -1,6 +1,6 @@
 {
   "name": "m2v",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "miniprogram",
   "main": "src/index.js",
   "scripts": {
@@ -15,6 +15,15 @@
   "bugs": {
     "url": "https://github.com/fafayzf/m2v/issues"
   },
+  "keywords": [
+    "vue",
+    "小程序",
+    "微信小程序",
+    "mini-to-vue",
+    "miniprogram-to-vue",
+    "component",
+    "小程序转Vue"
+  ],
   "author": "shijianjun",
   "license": "MIT",
   "devDependencies": {
