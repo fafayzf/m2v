@@ -1,8 +1,8 @@
 {
   "name": "m2v",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "miniprogram",
-  "main": "src/index.js",
+  "main": "lib/index.js",
   "scripts": {
     "build": "node ./examples/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -36,5 +36,12 @@
     "htmlparser2": "^8.0.1",
     "js-beautify": "^1.14.4",
     "postcss": "^5.2.18"
+  },
+  "devDependencies": {
+    "@babel/preset-env": "^7.18.10",
+    "gulp": "^4.0.2",
+    "gulp-babel": "^8.0.0",
+    "gulp-concat": "^2.6.1",
+    "gulp-uglify": "^3.0.2"
   }
 }
