@@ -1,8 +1,9 @@
 # m2v
 
-#### Wechat applet code into Vue code
+#### 微信小程序（组件）代码转Vue（组件）代码
+###### Wechat applet code into Vue code
 
-- Only component transformations are supported !!!
+> only component transformations are supported !!!
 
 ## Scripts
 
