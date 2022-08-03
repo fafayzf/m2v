@@ -1,6 +1,19 @@
-## 微信小程序代码转Vue代码
+# m2v
 
-### 只支持组件（Component）转换！！！
+#### Wechat applet code into Vue code
+
+- Only component transformations are supported !!!
+
+## Scripts
+
+```sh
+
+npm i m2v
+
+```
+
+## Use
+
 
 ```js
 
