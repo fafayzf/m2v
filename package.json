@@ -1,12 +1,13 @@
 {
   "name": "m2v",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "miniprogram",
   "main": "lib/index.js",
   "scripts": {
     "build": "node ./examples/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "files": ["lib"],
   "repository": {
     "type": "git",
     "url": "https://github.com/fafayzf/m2v.git"
