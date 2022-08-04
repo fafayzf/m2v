@@ -2,7 +2,7 @@
   "name": "m2v",
   "version": "1.0.10",
   "description": "miniprogram",
-  "main": "lib/index.js",
+  "main": "lib/m2v.mini.js",
   "scripts": {
     "example": "node ./examples/index.js",
     "build": "gulp && sh ./build/release.sh",
