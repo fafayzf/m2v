@@ -1,6 +1,6 @@
 {
   "name": "m2v",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "miniprogram",
   "main": "lib/index.js",
   "scripts": {
