@@ -5,7 +5,8 @@
   "main": "lib/m2v.mini.js",
   "scripts": {
     "example": "node ./examples/index.js",
-    "build": "gulp && sh ./build/release.sh",
+    "build": "rollup --config",
+    "pub": "sh ./build/release.sh",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "files": [
@@ -31,23 +32,21 @@
   ],
   "author": "shijianjun",
   "license": "MIT",
-  "dependencies": {
+  "devDependencies": {
     "@babel/generator": "^7.18.7",
     "@babel/parser": "^7.18.8",
+    "@babel/preset-env": "^7.18.10",
     "@babel/traverse": "^7.18.8",
     "@babel/types": "^7.18.8",
+    "@rollup/plugin-commonjs": "^22.0.1",
+    "@rollup/plugin-json": "^4.1.0",
+    "@rollup/plugin-node-resolve": "^13.3.0",
     "dom-serializer": "^2.0.0",
     "domhandler": "^5.0.3",
     "htmlparser2": "^8.0.1",
     "js-beautify": "^1.14.4",
-    "postcss": "^5.2.18"
-  },
-  "devDependencies": {
-    "@babel/preset-env": "^7.18.10",
-    "gulp": "^4.0.2",
-    "gulp-babel": "^8.0.0",
-    "gulp-concat": "^2.6.1",
-    "gulp-uglify": "^3.0.2",
-    "npx-version": "^1.1.5"
+    "npx-version": "^1.1.5",
+    "postcss": "^5.2.18",
+    "rollup-plugin-uglify": "^6.0.4"
   }
 }
