@@ -26,7 +26,7 @@
 	</div>
 </template>
 <script>
-	import NavTab from "../components/nav";
+	import NavTab from "../components/nav.vue";
 	export default {
 	  components: {
 	    "nav-tab": NavTab

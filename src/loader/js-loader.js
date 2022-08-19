@@ -50,7 +50,7 @@ const transformNode = (ast, JsonAst) => {
           ]
           const importDeclaration = types.ImportDeclaration(
             importDefaultSpecifier,
-            types.StringLiteral(jsonConfig.usingComponents[componentName])
+            types.StringLiteral(`${jsonConfig.usingComponents[componentName]}.vue`) // vue3 未加后缀 引入错误
           );
           path.get('body')[0].insertBefore(importDeclaration);
         })
