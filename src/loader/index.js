@@ -23,7 +23,8 @@ const loader = (dir) => {
 
   return components.map(async content => {
     const generatorHtml = WxmlLoader(content.wxml)
-    const generatorJs = JsLoader(content.js)
+    // 由于json配置文件默认加载到script中，故.json 文件逻辑在js中操作
+    const generatorJs = JsLoader(content.js, content.json)
     const generatorWxss = await WxsslLoader(content.wxss)
     const html = beautify.html(`\t<div>${generatorHtml}</div>\t`, {
       indent_size: 2

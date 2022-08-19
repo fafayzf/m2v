@@ -3,9 +3,14 @@ const traverse = require('@babel/traverse').default
 const generator = require('@babel/generator').default
 const types = require('@babel/types')
 const config = require('../config')
+const uppercamelcase = require('uppercamelcase')
+const decamelize = require('decamelize')
 
 
-const transformNode = (ast) => {
+const transformNode = (ast, JsonAst) => {
+  // json配置文件
+  const jsonConfig = JsonAst && JSON.parse(JsonAst)
+
   traverse(ast, {
     Program(path) {
       // 根节点打标记
@@ -15,11 +20,42 @@ const transformNode = (ast) => {
         const expression = childNode.expression
         if (expression.callee.name === 'Component') {
           const properties = expression.arguments[0].properties
-          properties && properties.map(item => {
-            item.rootProperty = true // 打标记
-          })
+          if (properties) {
+            // 根节点打标记
+            properties.map(item => {
+              item.rootProperty = true 
+            })
+
+            if (jsonConfig.usingComponents) {
+              const componentNames = Object.keys(jsonConfig.usingComponents)
+              const obj = componentNames.map(name => types.objectProperty(
+                types.StringLiteral(decamelize(name, {separator: '-'})),
+                types.Identifier(uppercamelcase(name))
+              ))
+              
+              const values = types.objectExpression(obj)
+              const components = types.objectProperty(types.Identifier('components'), values)
+              properties.unshift(components)
+            }
+          }
+          
         }
       })
+      // 引入组件
+      if (jsonConfig.usingComponents) {
+        const components = Object.keys(jsonConfig.usingComponents)
+        components.forEach(componentName => {
+          const importDefaultSpecifier = [
+            types.ImportDefaultSpecifier(types.Identifier(uppercamelcase(componentName))),
+          ]
+          const importDeclaration = types.ImportDeclaration(
+            importDefaultSpecifier,
+            types.StringLiteral(jsonConfig.usingComponents[componentName])
+          );
+          path.get('body')[0].insertBefore(importDeclaration);
+        })
+       
+      }
     },
     ExpressionStatement(path) {
       const node = path.node
@@ -143,8 +179,8 @@ const transformNode = (ast) => {
   return ast
 }
 
-module.exports = (code) => {
-  const ast = transformNode(parser.parse(code))
+module.exports = (code, JsonCode) => {
+  const ast = transformNode(parser.parse(code), JsonCode)
   const node = generator(ast, {}, code)
   return node.code
 }

@@ -41,12 +41,14 @@
     "@rollup/plugin-commonjs": "^22.0.1",
     "@rollup/plugin-json": "^4.1.0",
     "@rollup/plugin-node-resolve": "^13.3.0",
+    "decamelize": "5",
     "dom-serializer": "^2.0.0",
     "domhandler": "^5.0.3",
     "htmlparser2": "^8.0.1",
     "js-beautify": "^1.14.4",
     "npx-version": "^1.1.5",
     "postcss": "^5.2.18",
-    "rollup-plugin-uglify": "^6.0.4"
+    "rollup-plugin-uglify": "^6.0.4",
+    "uppercamelcase": "^3.0.0"
   }
 }

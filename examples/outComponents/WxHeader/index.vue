@@ -26,7 +26,11 @@
 	</div>
 </template>
 <script>
+	import NavTab from "../components/nav";
 	export default {
+	  components: {
+	    "nav-tab": NavTab
+	  },
 	  mixins: [mixins],
 	  props: {
 	    myProperty: {
