@@ -18,12 +18,12 @@ const tasks = (entry, output) => {
         }
         components.forEach(async component => {
 
-          const { code, name } = await component;
+          const { code, name, isCss } = await component;
           const baseUrl = path.join(output, entryPath.replace(entry, ''))
           // 同步创建目录
           mkdirSync(baseUrl)
-
-          const outputPath = path.join(baseUrl, name + '.vue')
+          const ext = isCss ? '.css' : '.vue'
+          const outputPath = path.join(baseUrl, name + ext)
           // 写入文件
           fs.writeFileSync(outputPath, code)
         });
@@ -31,7 +31,8 @@ const tasks = (entry, output) => {
         // console.log('vue-components', components)
       })
   })
-} 
+}
+
 
 // 输出
 const transform = (entry, output) => {
