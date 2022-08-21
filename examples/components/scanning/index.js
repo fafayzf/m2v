@@ -16,6 +16,9 @@ Component({
     },
     created: function() {
       const a = 1;
+    },
+    detached: function() {
+      const a = 1;
     }
   },
   methods: {

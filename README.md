@@ -40,3 +40,8 @@ transform(entry, output)
 1. 若目录存在`.wxml`, 则作为组件进行转换
 2. 若不存在`.wxml`, 但存在`.wxss`, 则作为样式文件单独转换
 3. 若既不存在`.wxml`, 也不存在`.wxss`, 则直接拷贝文件，不进行任何处理
+
+
+### tips
+
+1. 只支持lifetimes 里的生命周期

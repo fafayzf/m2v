@@ -25,7 +25,7 @@
 	    };
 	  },
 
-	  created: function() {
+	  crated: function() {
 	    const a = 1;
 	  },
 
@@ -34,6 +34,9 @@
 	    const b = 2;
 	  },
 
+	  destroyed: function() {
+	    const a = 1;
+	  },
 	  methods: {
 	    // 扫码结果返回
 	    scanCode(event) {

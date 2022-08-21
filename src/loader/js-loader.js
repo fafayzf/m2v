@@ -97,13 +97,20 @@ const transformNode = (ast, JsonAst) => {
           const properties = node.value.properties
           let mounted = []
           let created = null
+          let destroyed = null
           properties.length > 0 && properties.forEach(node => {
             if (node.key.name === 'attached' || node.key.name === 'ready') {
               mounted.push(...node.value.body.body)
             }
             if (node.key.name === 'created') {
               created = node
+              created.key = types.Identifier('crated')
               path.insertBefore(created)
+            }
+            if (node.key.name === 'detached') {
+              destroyed = node
+              destroyed.key = types.Identifier('destroyed')
+              path.insertAfter(destroyed)
             }
           })
 
