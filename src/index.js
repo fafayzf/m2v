@@ -7,36 +7,35 @@ const loader = require('./loader')
 const tasks = (entry, output) => {
 
   const fileList = traverseDir(entry)
-
+  
   return fileList.map(async entryPath => {
     const result = await loader(entryPath)
-
-    return Promise.resolve(result).then(components => {
-        if (!components) return
-        if (!Array.isArray(components)) {
-          components = [components]
-        }
-        components.forEach(async component => {
-
-          const { code, name, isCss } = await component;
-          const baseUrl = path.join(output, entryPath.replace(entry, ''))
-          // 同步创建目录
-          mkdirSync(baseUrl)
-          const ext = isCss ? '.css' : '.vue'
-          const outputPath = path.join(baseUrl, name + ext)
-          // 写入文件
-          fs.writeFileSync(outputPath, code)
-        });
-        // 转义后的组件 
-        // console.log('vue-components', components)
+    const baseUrl = path.join(output, entryPath.replace(entry, ''))
+    // 写入组件
+    if (result.vueFiles && mkdirSync(baseUrl)) {
+      const { name, code } = result.vueFiles
+      fs.writeFileSync(path.join(baseUrl, name + '.vue'), code)
+    }
+    // 写入css
+    if (result.cssFiles.length > 0 && mkdirSync(baseUrl)) {
+      result.cssFiles.map(wxssObj => {
+        const { name, code } = wxssObj
+        fs.writeFileSync(path.join(baseUrl, name + '.css'), code)
       })
+    }
+    // 复制其它文件
+    if (result.otherFiles.length > 0 && mkdirSync(baseUrl)) {
+      result.otherFiles.map(paths => {
+        const fileArray = paths.split('\\')
+        fs.copyFileSync(paths, path.join(baseUrl, fileArray[fileArray.length - 1]))
+      })
+    }
   })
 }
 
 
 // 输出
 const transform = (entry, output) => {
-  
   return Promise.all(tasks(entry, output))
 }
 

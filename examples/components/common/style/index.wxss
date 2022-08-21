@@ -1,0 +1,5 @@
+@import './index.wxss';
+a {
+  text-align: center;
+  font-size: 10rpx;
+}

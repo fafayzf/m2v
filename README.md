@@ -34,3 +34,9 @@ const output = resolve('./outComponents/')
 transform(entry, output)
 
 ```
+
+## 转换逻辑
+
+1. 若目录存在`.wxml`, 则作为组件进行转换
+2. 若不存在`.wxml`, 但存在`.wxss`, 则作为样式文件单独转换
+3. 若既不存在`.wxml`, 也不存在`.wxss`, 则直接拷贝文件，不进行任何处理

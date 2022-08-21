@@ -10,7 +10,18 @@ const postcssPluginRpxtoPx = postcss.plugin('postcss-plugin-rpx-to-px', () => {
   }
 })
 
+const postcssPluginImport = postcss.plugin('postcss-plugin-import', () => {
+  return (root) => {
+    root.walkAtRules('import', (decl) => {
+      decl.params = decl.params.replace(/\.wxss/g, '.css')
+    })
+  }
+})
+
 module.exports = async (code) => {
-  const generate = await postcss([postcssPluginRpxtoPx]).process(code)
+  const generate = await postcss([
+    postcssPluginRpxtoPx, 
+    postcssPluginImport
+  ]).process(code)
   return generate.css
 }
