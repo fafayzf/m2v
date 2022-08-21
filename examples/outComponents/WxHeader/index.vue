@@ -81,6 +81,8 @@
 	};
 </script>
 <style lang="scss" scoped>
+	@import '../common/index.css';
+
 	.header {
 	    position: fixed;
 	    top: 0;

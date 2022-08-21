@@ -1,0 +1,12 @@
+/* eslint-disable */
+var style = require('../wxs/style.wxs');
+
+function rootStyle(data) {
+
+  return style({});
+}
+
+module.exports = {
+  rootStyle: rootStyle,
+};
+
