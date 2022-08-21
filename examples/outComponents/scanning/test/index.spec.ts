@@ -1,11 +1,11 @@
 import path from 'path';
 import simulate from 'miniprogram-simulate';
 
-describe('nav-bar', () => {
-  let components = `Zmnav-bar`
+describe('scanning', () => {
+  let components = `Zmscanning`
   components = simulate.load(
-    path.resolve(__dirname, '../../nav-bar/index'),
-    'zm-nav-bar',
+    path.resolve(__dirname, '../../scanning/index'),
+    'zm-scanning',
     {
       rootPath: path.resolve(__dirname, '../../'),
     }

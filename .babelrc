@@ -1,0 +1,6 @@
+{
+  "parserOptions": {
+    "sourceType": "module"
+  },
+  "presets": ["es2015", "stage-0"]
+}

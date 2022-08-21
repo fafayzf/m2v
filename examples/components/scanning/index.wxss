@@ -1,0 +1,49 @@
+@import '../common/index.wxss';
+@import '../common/iconfont.wxss';
+
+.zm-scanning {
+  height: var(--camera-height);
+  width: var(--camera-width);
+  position: relative;
+}
+.zm-scanning .camera-bg {
+  position: absolute;
+  z-index: 1;
+  height: 100%;
+  width: 100%;
+}
+@keyframes scanScroll {
+  from {top: 0}
+  to {top: calc(var(--camera-height) - var(--scan-scroll-height))}
+}
+.zm-scanning .scan-scroll {
+  position: absolute;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  height: 50rpx;
+  width: 100%;
+  animation: scanScroll 3s infinite;
+  animation-timing-function: linear;
+}
+.zm-scanning .lighter-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  z-index: 1;
+  bottom: 28rpx;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.zm-scanning .lighter-wrapper .camera-lighter {
+  font-size: 68rpx;
+  color: rgba(255, 255, 255, 0.7);
+}
+.zm-scanning .camera-area {
+   position: absolute;
+   top: 0;
+   left: 0;
+   right: 0;
+   bottom: 0;
+}

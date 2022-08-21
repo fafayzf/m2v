@@ -1,0 +1,14 @@
+<view class="zm-scanning">
+  <image class="camera-bg" src="{{ hwCloudUrl }}/scanning/scan-border.png"></image>
+  <image class="scan-scroll" src="{{ hwCloudUrl }}/scanning/scan-scroll.png"></image>
+  <view class="lighter-wrapper" bindtap="flashTap">
+    <span class="iconfont icon-electric-torch camera-lighter" />
+  </view>
+  <camera
+    class="camera-area"
+    mode="scanCode"
+    device-position="back"
+    flash="{{ cameraFlash }}"
+    bindscancode="scanCode"
+  />
+</view>

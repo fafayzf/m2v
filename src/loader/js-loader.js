@@ -17,29 +17,32 @@ const transformNode = (ast, JsonAst) => {
       const node = path.node
       if (node.body.length === 0) return
       node.body.map(childNode => {
-        const expression = childNode.expression
-        if (expression.callee.name === 'Component') {
-          const properties = expression.arguments[0].properties
-          if (properties) {
-            // 根节点打标记
-            properties.map(item => {
-              item.rootProperty = true 
-            })
+        if (childNode.type === 'ExpressionStatement') {
+          const expression = childNode.expression
+            if (expression.callee.name === 'Component') {
+              const properties = expression.arguments[0].properties
+              if (properties) {
+                // 根节点打标记
+                properties.map(item => {
+                  item.rootProperty = true 
+                })
 
-            if (jsonConfig.usingComponents) {
-              const componentNames = Object.keys(jsonConfig.usingComponents)
-              const obj = componentNames.map(name => types.objectProperty(
-                types.StringLiteral(decamelize(name, {separator: '-'})),
-                types.Identifier(uppercamelcase(name))
-              ))
+                if (jsonConfig.usingComponents) {
+                  const componentNames = Object.keys(jsonConfig.usingComponents)
+                  const obj = componentNames.map(name => types.objectProperty(
+                    types.StringLiteral(decamelize(name, {separator: '-'})),
+                    types.Identifier(uppercamelcase(name))
+                  ))
+                  
+                  const values = types.objectExpression(obj)
+                  const components = types.objectProperty(types.Identifier('components'), values)
+                  properties.unshift(components)
+                }
+              }
               
-              const values = types.objectExpression(obj)
-              const components = types.objectProperty(types.Identifier('components'), values)
-              properties.unshift(components)
             }
-          }
-          
         }
+        
       })
       // 引入组件
       if (jsonConfig.usingComponents) {
@@ -60,7 +63,7 @@ const transformNode = (ast, JsonAst) => {
     ExpressionStatement(path) {
       const node = path.node
       const expression = node.expression
-      if (expression.type === 'CallExpression' && ['Component'].includes(expression.callee.name)) {
+      if (expression?.type === 'CallExpression' && ['Component'].includes(expression.callee.name)) {
         const objExpression = expression.arguments[0]
         const exportDefault = types.exportDefaultDeclaration(objExpression)
         path.replaceWith(exportDefault)
@@ -89,12 +92,23 @@ const transformNode = (ast, JsonAst) => {
           )
         }
 
-        if (node.key.name === 'ready' && node.value.type === 'FunctionExpression') {
-          node.key.name = 'mounted'
-        }
+        if (node.key.name === 'lifetimes' && node.value.type === 'ObjectExpression') {
 
-        if (node.key.name === 'detached' && node.value.type === 'FunctionExpression') {
-          node.key.name = 'destroyed'
+          const properties = node.value.properties
+          let mounted = []
+          let created = null
+          properties.length > 0 && properties.forEach(node => {
+            if (node.key.name === 'attached' || node.key.name === 'ready') {
+              mounted.push(...node.value.body.body)
+            }
+            if (node.key.name === 'created') {
+              created = node
+              path.insertBefore(created)
+            }
+          })
+
+          node = types.objectMethod('method', types.Identifier('mounted'), [], types.blockStatement(mounted))
+          
         }
       }
       path.replaceWith(node)
@@ -173,6 +187,11 @@ const transformNode = (ast, JsonAst) => {
 
         path.replaceWithMultiple(memberExpressionList)
       }
+
+      if (callee.property && callee.property.name === 'triggerEvent') {
+        // callee.property.name = types.Identifier('$emit') 
+        callee.property = types.Identifier('$emit') 
+      }
     }
   })
 
@@ -180,7 +199,7 @@ const transformNode = (ast, JsonAst) => {
 }
 
 module.exports = (code, JsonCode) => {
-  const ast = transformNode(parser.parse(code), JsonCode)
+  const ast = transformNode(parser.parse(code, {sourceType: 'module'}), JsonCode)
   const node = generator(ast, {}, code)
   return node.code
 }
