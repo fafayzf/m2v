@@ -11,9 +11,11 @@ const { getComponentFiles } = require('../utils')
 const combination = ({
   html, 
   js, 
-  css
+  css,
+  globalcss
 }) => {
-  const code = `<template>\n${html}\n</template>\n<script>\n${js}\n</script>\n<style lang="scss" scoped>\n${css}\n</style>`;
+
+  const code = `<template>\n${html}\n</template>\n<script>\n${js}\n</script>\n<style lang="scss">\n${globalcss}\n</style>\n<style lang="scss" scoped>\n${css}\n</style>`;
 
   return code
 }
@@ -26,7 +28,7 @@ const loader = async (dir) => {
   let otherFiles = []
   // 若存在组件
   if (components.componentFiles.length > 0) {
-    let generatorHtml, generatorWxss, generatorJs, transformFilePath;
+    let generatorHtml, generatorWxss, generatorJs, transformFilePath, generatorGlobalWxss
 
     for (let i = 0; i < components.componentFiles.length; i++) {
 
@@ -52,7 +54,9 @@ const loader = async (dir) => {
         generatorJs = JsLoader(content, jsonContent)
       }
       if (filename[1] === 'wxss') {
-        generatorWxss = await WxsslLoader(content)
+        const wxss = await WxsslLoader(content, 'component')
+        generatorWxss = wxss.css
+        generatorGlobalWxss = wxss.importCss
       }
 
     }
@@ -64,7 +68,8 @@ const loader = async (dir) => {
       indent_size: 2
     })
     const css = generatorWxss && beautify.css(`\t${generatorWxss}\t`)
-    const code =  combination({ html, js, css })
+    const globalcss = generatorGlobalWxss && beautify.css(`\t${generatorGlobalWxss}\t`)
+    const code = combination({ html, js, css, globalcss })
     // 转换后的组件内容和组件名
     vueFiles = {
       name: transformFilePath,
@@ -79,11 +84,10 @@ const loader = async (dir) => {
       const content = fs.readFileSync(filepath).toString('utf-8')
       const fileArray = filepath.split('\\')
       const fileData = fileArray[fileArray.length -1]
-      const generatorWxss = await WxsslLoader(content)
-
+      const generatorWxss = await WxsslLoader(content, 'wxss')
       cssFiles.push({
         name: fileData.split('.')[0],
-        code: generatorWxss
+        code: generatorWxss.css
       })
     }
   }

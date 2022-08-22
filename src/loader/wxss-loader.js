@@ -1,5 +1,5 @@
 const postcss = require('postcss')
-
+let importcss = ''
 const postcssPluginRpxtoPx = postcss.plugin('postcss-plugin-rpx-to-px', () => {
   return (root) => {
     root.walkDecls((decl) => {
@@ -10,18 +10,27 @@ const postcssPluginRpxtoPx = postcss.plugin('postcss-plugin-rpx-to-px', () => {
   }
 })
 
-const postcssPluginImport = postcss.plugin('postcss-plugin-import', () => {
+const postcssPluginImport = postcss.plugin('postcss-plugin-import', (type) => {
   return (root) => {
     root.walkAtRules('import', (decl) => {
-      decl.params = decl.params.replace(/\.wxss/g, '.css')
+      const importVal = decl.params.replace(/\.wxss/g, '.css')
+      importcss += `@${decl.name} ${importVal};`
+      if (type === 'component') {
+        decl.remove()
+      } else {
+        decl.params = importVal
+      }
     })
   }
 })
 
-module.exports = async (code) => {
+module.exports = async (code, type) => {
   const generate = await postcss([
     postcssPluginRpxtoPx, 
-    postcssPluginImport
+    postcssPluginImport(type)
   ]).process(code)
-  return generate.css
+  return {
+    importCss: importcss,
+    css: generate.css
+  }
 }

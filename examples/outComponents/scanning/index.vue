@@ -52,10 +52,11 @@
 	  }
 	};
 </script>
-<style lang="scss" scoped>
+<style lang="scss">
 	@import '../common/index.css';
 	@import '../common/iconfont.css';
-
+</style>
+<style lang="scss" scoped>
 	.zm-scanning {
 	    height: var(--camera-height);
 	    width: var(--camera-width);
