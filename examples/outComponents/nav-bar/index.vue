@@ -14,7 +14,7 @@
 	};
 </script>
 <style lang="scss" scoped>
-	@import '../common/index.wxss';
+	@import '../common/index.css';
 
 	.zm-nav-bar {}
 </style>

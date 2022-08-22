@@ -7,6 +7,9 @@ module.exports = (opts = {}) => {
           return Number(numStr) / 2 + 'px'
         })
       })
+      root.walkAtRules('import', (decl) => {
+        decl.params = decl.params.replace(/\.wxss/g, '.css')
+      })
     }
   }
 }

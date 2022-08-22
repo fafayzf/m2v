@@ -53,8 +53,8 @@
 	};
 </script>
 <style lang="scss" scoped>
-	@import '../common/index.wxss';
-	@import '../common/iconfont.wxss';
+	@import '../common/index.css';
+	@import '../common/iconfont.css';
 
 	.zm-scanning {
 	    height: var(--camera-height);
