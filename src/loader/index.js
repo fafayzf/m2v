@@ -12,7 +12,6 @@ const combination = ({
   html, 
   js, 
   css,
-  globalCss
 }) => {
   const code = `<template>\n${html}\n</template>\n<script>\n${js}\n</script>\n<style lang="scss" scoped>\n${css}\n</style>`;
 
@@ -59,7 +58,7 @@ const loader = async (dir) => {
 
     }
 
-    const html = generatorHtml && beautify.html(`\t<div>${generatorHtml}</div>\t`, {
+    const html = generatorHtml && beautify.html(`\t<div class="page">${generatorHtml}</div>\t`, {
       indent_size: 2
     })
     const js = generatorJs && beautify.js(`\t${generatorJs}\t`, {

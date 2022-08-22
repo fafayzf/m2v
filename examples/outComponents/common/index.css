@@ -1,7 +1,1 @@
-:root {
-  /* scanning component */
-  --camera-height: 250px;
-  --camera-width: 252px;
-  --camera-top-margin: 24px;
-  --scan-scroll-height: 25px;
-}
+@import './style/var.wxss';

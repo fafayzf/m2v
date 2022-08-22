@@ -1,5 +1,5 @@
 <template>
-	<div>
+	<div class="page">
 	  <demo-block title="顶部导航栏" padding>
 	    <zm-nav-bar>顶部导航栏</zm-nav-bar>
 	  </demo-block>

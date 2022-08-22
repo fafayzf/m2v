@@ -36,7 +36,6 @@ const postcssPluginPage = require('../plugins/postcssPluginPage')
 
 module.exports = async (code, filepath) => {
   const generate = await postcss()
-    .use(atImport())
     .use(postcssPluginPage())
     .use(postcssPluginRpxtoPx())
     .process(code, {

@@ -3,7 +3,7 @@ module.exports = (opts = {}) => {
     postcssPlugin: 'postcss-plugin-page',
     Rule (rule) {
       if (rule.selector === 'page') {
-        rule.selector = ':root'
+        rule.selector = '.page'
       }
     }
   }
