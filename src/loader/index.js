@@ -12,10 +12,9 @@ const combination = ({
   html, 
   js, 
   css,
-  globalcss
+  globalCss
 }) => {
-
-  const code = `<template>\n${html}\n</template>\n<script>\n${js}\n</script>\n<style lang="scss">\n${globalcss}\n</style>\n<style lang="scss" scoped>\n${css}\n</style>`;
+  const code = `<template>\n${html}\n</template>\n<script>\n${js}\n</script>\n<style lang="scss" scoped>\n${css}\n</style>`;
 
   return code
 }
@@ -54,9 +53,8 @@ const loader = async (dir) => {
         generatorJs = JsLoader(content, jsonContent)
       }
       if (filename[1] === 'wxss') {
-        const wxss = await WxsslLoader(content, 'component')
-        generatorWxss = wxss.css
-        generatorGlobalWxss = wxss.importCss
+        const css = await WxsslLoader(content, filepath)
+        generatorWxss = css
       }
 
     }
@@ -68,8 +66,7 @@ const loader = async (dir) => {
       indent_size: 2
     })
     const css = generatorWxss && beautify.css(`\t${generatorWxss}\t`)
-    const globalcss = generatorGlobalWxss && beautify.css(`\t${generatorGlobalWxss}\t`)
-    const code = combination({ html, js, css, globalcss })
+    const code =  combination({ html, js, css })
     // 转换后的组件内容和组件名
     vueFiles = {
       name: transformFilePath,
@@ -84,10 +81,11 @@ const loader = async (dir) => {
       const content = fs.readFileSync(filepath).toString('utf-8')
       const fileArray = filepath.split('\\')
       const fileData = fileArray[fileArray.length -1]
-      const generatorWxss = await WxsslLoader(content, 'wxss')
+      const generatorWxss = await WxsslLoader(content, filepath)
+
       cssFiles.push({
         name: fileData.split('.')[0],
-        code: generatorWxss.css
+        code: generatorWxss
       })
     }
   }

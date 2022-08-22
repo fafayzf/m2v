@@ -1,0 +1,7 @@
+page {
+  /* scanning component */
+  --camera-height: 500rpx;
+  --camera-width: 504rpx;
+  --camera-top-margin: 48rpx;
+  --scan-scroll-height: 50rpx;
+}

@@ -1,0 +1,7 @@
+{
+  "component": true,
+  "usingComponents": {
+    "zm-nav-bar": "../../nav-bar/index"
+  }
+}
+
