@@ -1,6 +1,6 @@
 {
   "name": "m2v",
-  "version": "1.1.20",
+  "version": "1.1.21",
   "description": "miniprogram",
   "main": "lib/m2v.mini.js",
   "scripts": {
