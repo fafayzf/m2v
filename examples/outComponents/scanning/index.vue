@@ -12,6 +12,7 @@
 </template>
 <script>
 	import zmconfig from '../common/config';
+	const source = this.$createMediaAudioPlayer();
 	const a = {
 	  test: 1
 	};
@@ -41,6 +42,11 @@
 	    // 扫码结果返回
 	    scanCode(event) {
 	      this.$emit('scancode', event);
+	      const source = this.$createMediaAudioPlayer();
+	      this.$showToast({
+	        title: 'title',
+	        icon: 'none'
+	      });
 	    },
 
 	    // 闪光灯开关

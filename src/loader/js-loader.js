@@ -63,10 +63,12 @@ const transformNode = (ast, JsonAst) => {
     ExpressionStatement(path) {
       const node = path.node
       const expression = node.expression
-      if (expression?.type === 'CallExpression' && ['Component'].includes(expression.callee.name)) {
-        const objExpression = expression.arguments[0]
-        const exportDefault = types.exportDefaultDeclaration(objExpression)
-        path.replaceWith(exportDefault)
+      if (expression?.type === 'CallExpression') {
+        if (types.isIdentifier(expression.callee) && ['Component'].includes(expression.callee.name)) {
+          const objExpression = expression.arguments[0]
+          const exportDefault = types.exportDefaultDeclaration(objExpression)
+          path.replaceWith(exportDefault)
+        }
       }
     },
     ObjectProperty(path) {
@@ -198,6 +200,11 @@ const transformNode = (ast, JsonAst) => {
       if (callee.property && callee.property.name === 'triggerEvent') {
         // callee.property.name = types.Identifier('$emit') 
         callee.property = types.Identifier('$emit') 
+      }
+
+      if (types.isMemberExpression(callee) && types.isIdentifier(callee.object) && callee.object.name === 'wx') {
+        callee.object.name = 'this'
+        callee.property.name = `$${callee.property.name}`
       }
     }
   })

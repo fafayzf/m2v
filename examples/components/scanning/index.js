@@ -1,4 +1,5 @@
 import zmconfig from '../common/config'
+const source = wx.createMediaAudioPlayer()
 const a = {
   test: 1
 }
@@ -25,6 +26,11 @@ Component({
     // 扫码结果返回
     scanCode(event) {
       this.triggerEvent('scancode', event);
+      const source = wx.createMediaAudioPlayer();
+      wx.showToast({
+        title: 'title',
+        icon: 'none'
+      })
     },
     // 闪光灯开关
     flashTap() {
