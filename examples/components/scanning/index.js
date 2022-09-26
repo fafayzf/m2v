@@ -11,9 +11,12 @@ Component({
   lifetimes: {
     attached: function() {
       this.setData({ hwCloudUrl: zmconfig.hwCloudUrl }); // 设置图片baseUrl
+      this.setData({ hwCloudUrl: zmconfig.hwCloudUrl }); // 设置图片baseUrl
+      this.setData({ hwCloudUrl: zmconfig.hwCloudUrl }); // 设置图片baseUrl
     },
     ready: function() {
     	const b = 2;
+    	// const b = 2;
     },
     created: function() {
       const a = 1;

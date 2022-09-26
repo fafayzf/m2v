@@ -32,7 +32,9 @@
 
 	  mounted() {
 	    this.hwCloudUrl = zmconfig.hwCloudUrl;
-	    const b = 2;
+	    this.hwCloudUrl = zmconfig.hwCloudUrl;
+	    this.hwCloudUrl = zmconfig.hwCloudUrl;
+	    const b = 2; // const b = 2;
 	  },
 
 	  destroyed: function() {
