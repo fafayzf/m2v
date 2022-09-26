@@ -102,7 +102,7 @@ const transformNode = (ast, JsonAst) => {
           let destroyed = null
           properties.length > 0 && properties.forEach(node => {
             if (node.key.name === 'attached' || node.key.name === 'ready') {
-              mounted = mounted.concat(node.value.body.body)
+              mounted = mounted.concat(node.value?.body?.body || [])
             }
             if (node.key.name === 'created') {
               created = node
